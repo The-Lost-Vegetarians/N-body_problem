@@ -41,7 +41,39 @@ State twoBodyODE(const State &state, double m1, double m2) {
     return dydt;
 }
 
-// rk4 solver to be implemented here. provide a concise multi-line comment explaining the method and the code following it.
+// rk4 solver to be implemented here. provide a concise multi-line comment explaining the method and the code following it. Done.
+/*
+    RK4 (Runge-Kutta 4th order) method:
+    - A numerical method to solve ordinary differential equations (ODEs).
+    - It estimates the next state using four "slopes" (k1, k2, k3, k4) computed from the derivative function.
+    - The weighted average of these slopes provides a more accurate update than Euler's method.
+    - Formula:
+        k1 = f(t_n, y_n)
+        k2 = f(t_n + h/2, y_n + h/2 * k1)
+        k3 = f(t_n + h/2, y_n + h/2 * k2)
+        k4 = f(t_n + h, y_n + h * k3)
+        y_{n+1} = y_n + h/6 * (k1 + 2*k2 + 2*k3 + k4)
+*/
+
+State rk4Step(const State &state, double t, double dt, double m1, double m2) {
+    State k1 = twoBodyODE(state, m1, m2);
+
+    State temp(state.size());
+    for (size_t i = 0; i < state.size(); i++) temp[i] = state[i] + 0.5 * dt * k1[i];
+    State k2 = twoBodyODE(temp, m1, m2);
+
+    for (size_t i = 0; i < state.size(); i++) temp[i] = state[i] + 0.5 * dt * k2[i];
+    State k3 = twoBodyODE(temp, m1, m2);
+
+    for (size_t i = 0; i < state.size(); i++) temp[i] = state[i] + dt * k3[i];
+    State k4 = twoBodyODE(temp, m1, m2);
+
+    State newState(state.size());
+    for (size_t i = 0; i < state.size(); i++) {
+        newState[i] = state[i] + dt / 6.0 * (k1[i] + 2*k2[i] + 2*k3[i] + k4[i]);
+    }
+    return newState;
+}
 
 int main() {
 
