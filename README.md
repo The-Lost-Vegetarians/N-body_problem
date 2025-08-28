@@ -20,15 +20,11 @@ This project implements **numerical integration techniques**, coupled with **par
 ### 2.1 Equations of Motion
 For two bodies with masses `m₁` and `m₂`, the gravitational force is:
 
-\[
-F_{ij} = G \frac{m_i m_j}{|r_j - r_i|^3} (r_j - r_i)
-\]
+F_ij = G ((m_i * m_j) / |r_j - r_i|^3) (r_j - r_i)
 
 Newton’s second law gives:
 
-\[
-m_i \frac{d^2 r_i}{dt^2} = \sum_j F_{ij}
-\]
+m_i * d^2 r_i / dt^2 = F_ij
 
 This leads to a coupled system of **ordinary differential equations (ODEs)**.  
 - For 2 bodies → closed-form elliptical orbits.  
@@ -39,15 +35,11 @@ This leads to a coupled system of **ordinary differential equations (ODEs)**.
 ### 2.2 Runge-Kutta Integration
 We use the **4th-order Runge-Kutta (RK4)** method to approximate solutions. For each timestep Δt:
 
-\[
-\begin{aligned}
-k_1 &= f(t, y) \\
-k_2 &= f(t + \tfrac{\Delta t}{2}, y + \tfrac{\Delta t}{2} k_1) \\
-k_3 &= f(t + \tfrac{\Delta t}{2}, y + \tfrac{\Delta t}{2} k_2) \\
-k_4 &= f(t + \Delta t, y + \Delta t \cdot k_3) \\
-y(t + \Delta t) &= y(t) + \tfrac{\Delta t}{6}(k_1 + 2k_2 + 2k_3 + k_4)
-\end{aligned}
-\]
+k_1 = f(t, y)  
+k_2 = f(t + Delta t / 2, y + Delta t / 2 * k_1)  
+k_3 = f(t + Delta t / 2, y + Delta t / 2 * k_2)  
+k_4 = f(t + Delta t, y + Delta t * k_3)  
+y(t + Delta t) = y(t) + (Delta t / 6) * (k_1 + 2k_2 + 2k_3 + k_4)  
 
 This method balances **accuracy and efficiency** for simulating motion.
 
