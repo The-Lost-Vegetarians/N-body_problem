@@ -39,26 +39,11 @@ This results in a coupled system of ordinary differential equations (ODEs) that 
 We use the 4th-order Runge-Kutta (RK4) method to approximate the solution to these ODEs. For each time step 
 Deltat, the state vector y (containing positions and velocities) is updated as follows:
 
-k_1=f(t,y)
-
-k_2=f(t+
-Deltat/2,y+
-Deltat/2
-cdotk_1)
-
-k_3=f(t+
-Deltat/2,y+
-Deltat/2
-cdotk_2)
-
-k_4=f(t+
-Deltat,y+
-Deltat
-cdotk_3)
-
-y(t+
-Deltat)=y(t)+
-fracDeltat6(k_1+2k_2+2k_3+k_4)
+k_1 = f(t, y)
+k_2 = f(t + \Delta t / 2, y + \Delta t / 2 \cdot k_1)
+k_3 = f(t + \Delta t / 2, y + \Delta t / 2 \cdot k_2)
+k_4 = f(t + \Delta t, y + \Delta t \cdot k_3)
+y(t + \Delta t) = y(t) + \frac{\Delta t}{6} (k_1 + 2k_2 + 2k_3 + k_4)
 
 This method offers a good balance between computational efficiency and accuracy for simulating orbital mechanics.
 
