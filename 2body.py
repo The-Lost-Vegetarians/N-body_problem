@@ -23,3 +23,26 @@ def two_body(t, y, G=4*np.pi**2, M=1.0):
     ay = -G * M * y_pos / r**3
     return np.array([vx, vy, ax, ay])
 
+# -----------------------------------------
+# 3. Simulation parameters
+# -----------------------------------------
+G = 4 * np.pi**2   # AU^3 / yr^2 / Msun
+M = 1.0            # Sun mass
+
+r0 = 1.0           # AU
+v0 = 2 * np.pi     # AU/yr (circular velocity)
+y0 = np.array([r0, 0.0, 0.0, v0])  # Earth initial state
+
+t0, tf = 0.0, 2.0      # simulate 2 years
+h = 0.001              # step size (years)
+steps = int((tf - t0)/h)
+
+# Precompute trajectory
+positions = np.zeros((steps, 2))
+y = y0.copy()
+t = t0
+for i in range(steps):
+    positions[i] = [y[0], y[1]]
+    y = rk4_step(lambda t_, y_: two_body(t_, y_, G, M), t, y, h)
+    t += h
+
