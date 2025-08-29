@@ -46,3 +46,44 @@ for i in range(steps):
     y = rk4_step(lambda t_, y_: two_body(t_, y_, G, M), t, y, h)
     t += h
 
+# -----------------------------------------
+# 4. Animate with matplotlib
+# -----------------------------------------
+fig, ax = plt.subplots(figsize=(6,6))
+ax.set_aspect('equal')
+ax.set_xlim(-1.5, 1.5)
+ax.set_ylim(-1.5, 1.5)
+ax.set_xlabel("x (AU)")
+ax.set_ylabel("y (AU)")
+ax.set_title("Earth orbiting Sun with fading trail")
+
+# Sun
+ax.scatter(0, 0, color="orange", s=200, marker="o", label="Sun")
+
+# Earth point + trail
+earth, = ax.plot([], [], 'bo', markersize=8, label="Earth")
+trail, = ax.plot([], [], 'b-', lw=1, alpha=0.6)
+
+ax.legend()
+
+# Trail length in frames
+trail_length = 200
+
+def init():
+    earth.set_data([], [])
+    trail.set_data([], [])
+    return earth, trail
+
+def update(frame):
+    x, y = positions[frame]
+    earth.set_data([x], [y])
+
+    # Only show the last "trail_length" points
+    start = max(0, frame - trail_length)
+    trail.set_data(positions[start:frame,0], positions[start:frame,1])
+    return earth, trail
+
+ani = animation.FuncAnimation(fig, update, frames=steps, 
+                              init_func=init, interval=10, blit=True)
+
+plt.show()
