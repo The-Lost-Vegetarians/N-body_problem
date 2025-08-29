@@ -4,7 +4,7 @@
 #include <vector>
 #include <utility> // For std::pair
 
-// Use a forward declaration to let the compiler know this type exists.
+// Forward declaration
 struct Body;
 
 // Define State as a vector of Body objects
@@ -19,21 +19,21 @@ struct Body {
 };
 
 // --- Global Variable Declarations ---
-// 'extern' tells other files that these variables exist and are defined elsewhere (in simulation.cpp).
 extern State bodies;
 extern std::vector<std::vector<std::pair<float, float>>> trajectories;
 extern bool is_paused;
 extern double time_step;
 
-// Camera control variables
+// --- Camera Control Variable Declarations ---
 extern float zoom;
 extern float pan_x;
 extern float pan_y;
 
 // --- Function Prototypes ---
-// Declares the functions that main.cpp will need to call from simulation.cpp.
-void initSimulation();
+void initFigure8Simulation();
+void initRandomSimulation(int n);
+void calculateAccelerations(State &current_bodies);
 State rk4Step(State &current_bodies, double dt);
+State verletStep(State &current_bodies, double dt);
 
 #endif // SIMULATION_H
-
