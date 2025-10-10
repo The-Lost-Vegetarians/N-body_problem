@@ -95,9 +95,6 @@ The `multi_nvcc.cpp` file implements a more advanced approach using NVIDIA's CUD
   * [x] CPU parallelization of the physics calculations using OpenMP.
   * [x] GPU acceleration for a large number of bodies using CUDA.
   * [x] Python prototype for 2-body visualization.
-  * [ ] **Remaining:**
-      * Experiment with Verlet integration for better long-term energy conservation.
-      * Implement real-time visualization for the C++ simulations (e.g., with OpenGL or a plotting library).
 
 ## 6\. Conclusion
 
